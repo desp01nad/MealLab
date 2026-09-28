@@ -1,5 +1,7 @@
 # Meal Lab
 
+[![CI](https://github.com/desp01nad/MealLab/actions/workflows/ci.yml/badge.svg)](https://github.com/desp01nad/MealLab/actions/workflows/ci.yml)
+
 A JavaFX desktop client for searching recipes from [TheMealDB](https://www.themealdb.com/api.php) API, with support for saving favorite meals and tracking the ones you've cooked.
 
 ![Search results](docs/screenshots/search.png)
