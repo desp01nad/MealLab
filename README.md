@@ -1,25 +1,66 @@
-Meal Lab
+# Meal Lab
 
-Meal Lab is a JavaFX client for searching recipes from TheMealDB API and managing favorites and cooked meals.
+A JavaFX desktop client for searching recipes from [TheMealDB](https://www.themealdb.com/api.php) API, with support for saving favorite meals and tracking the ones you've cooked.
 
-Prerequisites
+![Search results](docs/screenshots/search.png)
+
+## Features
+
+- Search recipes by name or by ingredient
+- Get a random recipe
+- View meal details: image, category, origin, ingredients and instructions
+- Save meals to **Favorites** and mark them as **Cooked** (persisted locally between runs)
+- Custom-styled UI (JavaFX CSS)
+
+## Screenshots
+
+| Meal details | Favorites |
+| --- | --- |
+| ![Meal details](docs/screenshots/meal-details.png) | ![Favorites](docs/screenshots/favorites.png) |
+
+## Project structure
+
+- `meal-lab-api` – client library for TheMealDB (HTTP calls, models, error handling)
+- `meal-lab-app` – JavaFX application (views, navigation, favorites/cooked managers)
+
+## Getting started
+
+### Prerequisites
+
 - JDK 21+
 - Maven 3.8+
 
-Install (build API then app):
-- `cd meal-lab-api && mvn clean install`
-- `cd ../meal-lab-app && mvn clean install`
+### Build
 
-Test:
-- `cd meal-lab-api && mvn test`
-- `cd ../meal-lab-app && mvn test`
+The app depends on the API module, so install the API first:
 
-Run the app:
-- `cd meal-lab-app && mvn javafx:run`
+```bash
+cd meal-lab-api && mvn clean install
+cd ../meal-lab-app && mvn clean install
+```
 
-Eclipse (using embedded Maven)
-- Import: `File` → `Import...` → `Maven` → `Existing Maven Projects`, select the repo root and finish.
-- Use embedded Maven: `Window` → `Preferences` → `Maven` → `Installations`, select `Embedded` and apply.
-- Install API: Right‑click `meal-lab-api` → `Run As` → `Maven build...`, Goals: `clean install`.
-- Run tests: Right‑click `meal-lab-api` (then `meal-lab-app`) → `Run As` → `Maven test`.
-- Run UI: Right‑click `meal-lab-app` → `Run As` → `Maven build...`, Goals: `javafx:run`.
+### Test
+
+```bash
+cd meal-lab-api && mvn test
+cd ../meal-lab-app && mvn test
+```
+
+### Run
+
+```bash
+cd meal-lab-app && mvn javafx:run
+```
+
+## Using Eclipse
+
+<details>
+<summary>Eclipse (embedded Maven) instructions</summary>
+
+1. **Import:** `File` → `Import...` → `Maven` → `Existing Maven Projects`, select the repo root and finish.
+2. **Use embedded Maven:** `Window` → `Preferences` → `Maven` → `Installations`, select `Embedded` and apply.
+3. **Install API:** right-click `meal-lab-api` → `Run As` → `Maven build...`, Goals: `clean install`.
+4. **Run tests:** right-click `meal-lab-api` (then `meal-lab-app`) → `Run As` → `Maven test`.
+5. **Run UI:** right-click `meal-lab-app` → `Run As` → `Maven build...`, Goals: `javafx:run`.
+
+</details>
