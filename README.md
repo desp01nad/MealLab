@@ -64,3 +64,11 @@ cd meal-lab-app && mvn javafx:run
 5. **Run UI:** right-click `meal-lab-app` → `Run As` → `Maven build...`, Goals: `javafx:run`.
 
 </details>
+
+## Credits
+
+Recipe data and images are provided by [TheMealDB](https://www.themealdb.com/), used via its free public API.
+
+## License
+
+Released under the [MIT License](LICENSE). Recipe data and images remain the property of TheMealDB and its contributors.
