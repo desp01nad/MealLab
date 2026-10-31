@@ -11,5 +11,6 @@
     <modules>
         <module>meal-lab-api</module>
         <module>meal-lab-app</module>
+        <module>meal-lab-server</module>
     </modules>
 </project>
