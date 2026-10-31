@@ -18,10 +18,6 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Build and test API
-        working-directory: meal-lab-api
-        run: mvn -B clean install
-
-      - name: Build and test app
-        working-directory: meal-lab-app
+      - name: Build and test all modules
         run: mvn -B clean verify
+

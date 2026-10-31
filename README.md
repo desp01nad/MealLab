@@ -34,21 +34,21 @@ A JavaFX desktop client for searching recipes from [TheMealDB](https://www.theme
 
 ### Build
 
-The app depends on the API module, so install the API first:
+From the repo root, build all modules and install them to your local Maven repository:
 
 ```bash
-cd meal-lab-api && mvn clean install
-cd ../meal-lab-app && mvn clean install
+mvn clean install
 ```
 
 ### Test
 
 ```bash
-cd meal-lab-api && mvn test
-cd ../meal-lab-app && mvn test
+mvn test
 ```
 
 ### Run
+
+The app uses the installed API module, so run the build step first:
 
 ```bash
 cd meal-lab-app && mvn javafx:run
