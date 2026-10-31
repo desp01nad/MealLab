@@ -74,6 +74,23 @@ class MealClientTest {
 				});
 	}
 
+	// Base URL Tests
+
+	@Test
+	void getRandomMeal_ShouldCallCustomBaseUrl_WhenProvided() throws Exception {
+		// Arrange
+		MealClient customClient = new MealClient(mockHttpClient, "http://localhost:9999/api");
+		setupMockResponse(200, "{ \"meals\": null }");
+
+		// Act
+		customClient.getRandomMeal();
+
+		// Assert
+		ArgumentCaptor<HttpGet> captor = ArgumentCaptor.forClass(HttpGet.class);
+		verify(mockHttpClient).execute(captor.capture(), any(HttpClientResponseHandler.class));
+		assertEquals("http://localhost:9999/api/random.php", captor.getValue().getUri().toString());
+	}
+
 	// executeRequest Tests
 
 	@Test
