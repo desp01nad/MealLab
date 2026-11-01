@@ -1,6 +1,12 @@
 spring:
   application:
     name: meal-lab-server
+  config:
+    import: optional:file:.env[.properties],optional:file:../.env[.properties]
+  datasource:
+    url: jdbc:postgresql://localhost:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
 
 mealdb:
   base-url: https://www.themealdb.com/api/json/v1/1
