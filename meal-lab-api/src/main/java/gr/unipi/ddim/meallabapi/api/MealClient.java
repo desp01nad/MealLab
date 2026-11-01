@@ -21,22 +21,32 @@ import gr.unipi.ddim.meallabapi.models.MealResponse;
 /** Client wrapper for TheMealDB API endpoints and image downloads. */
 public class MealClient {
 
-	private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1";
+	private static final String DEFAULT_BASE_URL = "https://www.themealdb.com/api/json/v1/1";
 	private static final Logger logger = LogManager.getLogger(MealClient.class);
 
 	private final CloseableHttpClient httpClient;
 	private final ObjectMapper mapper;
+	private final String baseUrl;
 
 	// Public Constructor (Default)
 	/** Creates a client with a default HTTP client configuration. */
 	public MealClient() {
-		this(HttpClients.createDefault());
+		this(DEFAULT_BASE_URL);
+	}
+
+	public MealClient(String baseUrl) {
+		this(HttpClients.createDefault(), baseUrl);
 	}
 
 	// Package-Private Constructor (For Tests)
 	/** Creates a client with a provided HTTP client. */
 	MealClient(CloseableHttpClient httpClient) {
+		this(httpClient, DEFAULT_BASE_URL);
+	}
+
+	MealClient(CloseableHttpClient httpClient, String baseUrl) {
 		this.httpClient = httpClient;
+		this.baseUrl = baseUrl;
 		this.mapper = new ObjectMapper();
 	}
 
@@ -83,20 +93,20 @@ public class MealClient {
 
 	/** Returns a randomly selected meal from the API. */
 	public Meal getRandomMeal() {
-		MealResponse response = executeRequest(BASE_URL + "/random.php");
+		MealResponse response = executeRequest(baseUrl + "/random.php");
 		return getFirstMealOrNull(response);
 	}
 
 	/** Looks up a single meal by its id. */
 	public Meal getMealById(String id) {
-		MealResponse response = executeRequest(BASE_URL + "/lookup.php?i=" + id);
+		MealResponse response = executeRequest(baseUrl + "/lookup.php?i=" + id);
 		return getFirstMealOrNull(response);
 	}
 
 	/** Searches meals by name and returns a list of results. */
 	public List<Meal> searchMealsByName(String name) {
 		String formatted = name.trim().replaceAll("\\s+", "_");
-		MealResponse response = executeRequest(BASE_URL + "/search.php?s=" + formatted);
+		MealResponse response = executeRequest(baseUrl + "/search.php?s=" + formatted);
 		if (response.getMeals() == null) {
 			return Collections.emptyList();
 		}
@@ -106,7 +116,7 @@ public class MealClient {
 	/** Filters meals by ingredient and returns a list of results. */
 	public List<Meal> filterMealsByIngredient(String ingredient) {
 		String formatted = ingredient.trim().replaceAll("\\s+", "_");
-		MealResponse response = executeRequest(BASE_URL + "/filter.php?i=" + formatted);
+		MealResponse response = executeRequest(baseUrl + "/filter.php?i=" + formatted);
 		if (response.getMeals() == null) {
 			return Collections.emptyList();
 		}
