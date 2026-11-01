@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import gr.unipi.ddim.meallabapi.api.MealClient;
+import gr.unipi.ddim.meallabapi.models.Meal;
 import gr.unipi.ddim.meallabserver.dto.MealDetails;
 import gr.unipi.ddim.meallabserver.dto.MealSummary;
+import gr.unipi.ddim.meallabserver.exception.MealNotFoundException;
 
 @Service
 public class MealService {
@@ -24,7 +26,11 @@ public class MealService {
     }
 
     public MealDetails getMealById(String id) {
-        return MealDetails.from(mealClient.getMealById(id));
+        Meal meal = mealClient.getMealById(id);
+        if (meal == null) {
+            throw new MealNotFoundException(id);
+        }
+        return MealDetails.from(meal);
     }
 
     public MealDetails getRandomMeal() {
