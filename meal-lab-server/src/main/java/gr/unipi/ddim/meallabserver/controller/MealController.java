@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import gr.unipi.ddim.meallabapi.models.Meal;
+import gr.unipi.ddim.meallabserver.dto.MealSummary;
 import gr.unipi.ddim.meallabserver.service.MealService;
 
 @RestController
@@ -21,7 +21,7 @@ public class MealController {
     }
 
     @GetMapping
-    public List<Meal> searchMeals(@RequestParam String name) {
+    public List<MealSummary> searchMeals(@RequestParam String name) {
         return mealService.searchMeals(name);
     }
 
