@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import gr.unipi.ddim.meallabapi.api.MealClient;
+import gr.unipi.ddim.meallabserver.dto.MealDetails;
 import gr.unipi.ddim.meallabserver.dto.MealSummary;
 
 @Service
@@ -20,5 +21,13 @@ public class MealService {
         return mealClient.searchMealsByName(name).stream()
                 .map(MealSummary::from)
                 .toList();
+    }
+
+    public MealDetails getMealById(String id) {
+        return MealDetails.from(mealClient.getMealById(id));
+    }
+
+    public MealDetails getRandomMeal() {
+        return MealDetails.from(mealClient.getRandomMeal());
     }
 }
