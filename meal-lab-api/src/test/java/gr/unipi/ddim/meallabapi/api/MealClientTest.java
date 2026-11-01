@@ -186,6 +186,20 @@ class MealClientTest {
 		assertTrue(results.isEmpty());
 	}
 
+	@Test
+	void searchMealsByName_ShouldEncodeSpecialCharacters_WhenBuildingUrl() throws Exception {
+		// Arrange
+		setupMockResponse(200, "{ \"meals\": null }");
+
+		// Act
+		mealClient.searchMealsByName("pasta\"&i=1");
+
+		// Assert
+		ArgumentCaptor<HttpGet> captor = ArgumentCaptor.forClass(HttpGet.class);
+		verify(mockHttpClient).execute(captor.capture(), any(HttpClientResponseHandler.class));
+		assertTrue(captor.getValue().getUri().toString().endsWith("/search.php?s=pasta%22%26i%3D1"));
+	}
+
 	// filterMealsByIngredient Tests
 
 	@Test

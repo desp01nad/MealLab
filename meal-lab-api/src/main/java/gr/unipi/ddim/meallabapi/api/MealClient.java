@@ -1,6 +1,8 @@
 package gr.unipi.ddim.meallabapi.api;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,6 +52,10 @@ public class MealClient {
 		this.mapper = new ObjectMapper();
 	}
 
+	private String encodeQueryValue(String value) {
+		return URLEncoder.encode(value, StandardCharsets.UTF_8);
+	}
+
 	private MealResponse executeRequest(String url) {
 		HttpGet request = new HttpGet(url);
 
@@ -59,7 +65,7 @@ public class MealClient {
 
 				// Handle Server Errors
 				if (status >= 400) {
-					throw new MealApiException("API request faiiled with error status: " + status);
+					throw new MealApiException("API request failed with error status: " + status);
 				}
 
 				String body = EntityUtils.toString(response.getEntity());
@@ -80,7 +86,7 @@ public class MealClient {
 		} catch (IOException e) {
 			// Handle Network Errors
 			logger.error("Network error while calling TheMealDB: {}", url, e);
-			throw new MealApiException("Network Error: Unable to conncect to theMealDB", e);
+			throw new MealApiException("Network Error: Unable to connect to theMealDB", e);
 		}
 	}
 
@@ -99,14 +105,14 @@ public class MealClient {
 
 	/** Looks up a single meal by its id. */
 	public Meal getMealById(String id) {
-		MealResponse response = executeRequest(baseUrl + "/lookup.php?i=" + id);
+		MealResponse response = executeRequest(baseUrl + "/lookup.php?i=" + encodeQueryValue(id));
 		return getFirstMealOrNull(response);
 	}
 
 	/** Searches meals by name and returns a list of results. */
 	public List<Meal> searchMealsByName(String name) {
 		String formatted = name.trim().replaceAll("\\s+", "_");
-		MealResponse response = executeRequest(baseUrl + "/search.php?s=" + formatted);
+		MealResponse response = executeRequest(baseUrl + "/search.php?s=" + encodeQueryValue(formatted));
 		if (response.getMeals() == null) {
 			return Collections.emptyList();
 		}
@@ -116,7 +122,7 @@ public class MealClient {
 	/** Filters meals by ingredient and returns a list of results. */
 	public List<Meal> filterMealsByIngredient(String ingredient) {
 		String formatted = ingredient.trim().replaceAll("\\s+", "_");
-		MealResponse response = executeRequest(baseUrl + "/filter.php?i=" + formatted);
+		MealResponse response = executeRequest(baseUrl + "/filter.php?i=" + encodeQueryValue(formatted));
 		if (response.getMeals() == null) {
 			return Collections.emptyList();
 		}
