@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: meal-lab-server
+
+mealdb:
+  base-url: https://www.themealdb.com/api/json/v1/1
