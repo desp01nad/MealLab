@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.Pattern;
 
 import gr.unipi.ddim.meallabserver.dto.MealSummary;
@@ -26,18 +27,21 @@ public class FavoriteController {
         this.favoriteService = favoriteService;
     }
 
+    @Operation(summary = "Add a meal to favorites")
     @PutMapping("/{mealId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addFavorite(@PathVariable @Pattern(regexp = "\\d+") String mealId) {
         favoriteService.addFavorite(mealId);
     }
 
+    @Operation(summary = "Remove a meal from favorites")
     @DeleteMapping("/{mealId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeFavorite(@PathVariable @Pattern(regexp = "\\d+") String mealId) {
         favoriteService.removeFavorite(mealId);
     }
 
+    @Operation(summary = "List favorite meals")
     @GetMapping
     public List<MealSummary> getFavorites() {
         return favoriteService.getFavorites();

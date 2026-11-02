@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 import gr.unipi.ddim.meallabserver.dto.CookedEntryResponse;
@@ -26,12 +27,14 @@ public class CookedController {
         this.cookedService = cookedService;
     }
 
+    @Operation(summary = "Record a cooked meal with a rating")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CookedEntryResponse recordCookedMeal(@Valid @RequestBody CookedMealRequest request) {
         return cookedService.recordCookedMeal(request);
     }
 
+    @Operation(summary = "List cooked meals, newest first")
     @GetMapping
     public List<CookedEntryResponse> getCookedEntries() {
         return cookedService.getCookedEntries();
